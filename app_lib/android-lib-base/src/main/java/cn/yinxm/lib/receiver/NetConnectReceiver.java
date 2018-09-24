@@ -22,7 +22,7 @@ public class NetConnectReceiver extends BroadcastReceiver {
 //            LogUtil.d("isConnected=" + isConnected);
 //            if (isConnected) {
 //                BaseApplication application = BaseApplication.getInstance();
-//                LogUtil.d("ecarx 检测到网络已连接, application=" + application);
+//                LogUtil.d("app 检测到网络已连接, application=" + application);
 //                if (application != null) {
 //                    boolean isSyncServerNetTaskSuccess = application.isSyncServerNetTaskSuccess();
 //                    LogUtil.d("isSyncServerNetTaskSuccess" + isSyncServerNetTaskSuccess + ", getUserId=" + LoginUtil.getUserId());
@@ -50,7 +50,7 @@ public class NetConnectReceiver extends BroadcastReceiver {
                 isWifiConnected = false;
             }
 
-//            Activity currentShowingActivity = EcarxActivityManager.getInstance().getCurrentShowingActivity();
+//            Activity currentShowingActivity = AppActivityManager.getInstance().getCurrentShowingActivity();
 //            if (currentShowingActivity instanceof BaseActivity) {
 //                BaseActivity mBaseActivity = (BaseActivity) currentShowingActivity;
 //                mBaseActivity.updateTopBarWifi(isWifiConnected);

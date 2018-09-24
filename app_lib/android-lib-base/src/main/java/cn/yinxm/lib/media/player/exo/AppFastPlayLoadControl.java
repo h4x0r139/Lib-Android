@@ -14,7 +14,7 @@ import com.google.android.exoplayer2.util.Util;
  * 功能: 快速播放模式
  */
 
-public class EcarxFastPlayLoadControl implements LoadControl {
+public class AppFastPlayLoadControl implements LoadControl {
 
     /**
      * The default minimum duration of media that the player will attempt to ensure is buffered at all
@@ -57,7 +57,7 @@ public class EcarxFastPlayLoadControl implements LoadControl {
     /**
      * Constructs a new instance, using the {@code DEFAULT_*} constants defined in this class.
      */
-    public EcarxFastPlayLoadControl() {
+    public AppFastPlayLoadControl() {
         this(new DefaultAllocator(true, C.DEFAULT_BUFFER_SEGMENT_SIZE));
     }
 
@@ -66,7 +66,7 @@ public class EcarxFastPlayLoadControl implements LoadControl {
      *
      * @param allocator The {@link DefaultAllocator} used by the loader.
      */
-    public EcarxFastPlayLoadControl(DefaultAllocator allocator) {
+    public AppFastPlayLoadControl(DefaultAllocator allocator) {
         this(allocator, DEFAULT_MIN_BUFFER_MS, DEFAULT_MAX_BUFFER_MS, DEFAULT_BUFFER_FOR_PLAYBACK_MS,
                 DEFAULT_BUFFER_FOR_PLAYBACK_AFTER_REBUFFER_MS);
     }
@@ -85,7 +85,7 @@ public class EcarxFastPlayLoadControl implements LoadControl {
      *     playback to resume after a rebuffer, in milliseconds. A rebuffer is defined to be caused by
      *     buffer depletion rather than a user action.
      */
-    public EcarxFastPlayLoadControl(DefaultAllocator allocator, int minBufferMs, int maxBufferMs,
+    public AppFastPlayLoadControl(DefaultAllocator allocator, int minBufferMs, int maxBufferMs,
                               long bufferForPlaybackMs, long bufferForPlaybackAfterRebufferMs) {
         this.allocator = allocator;
         minBufferUs = minBufferMs * 1000L;

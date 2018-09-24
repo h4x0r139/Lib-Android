@@ -46,7 +46,7 @@ public class OkHttpUtil {
         }
 
 //        if (paramHeaders == null) {
-//            paramHeaders = EcarxSign.getPublicHeaders(null);
+//            paramHeaders = AppSign.getPublicHeaders(null);
 //        }
 //        Headers.Builder headers = new Headers.Builder();
 //        if (paramHeaders != null && !paramHeaders.isEmpty()) {
@@ -155,7 +155,7 @@ public class OkHttpUtil {
         }
 
 //        if (paramHeaders == null) {
-//            paramHeaders = EcarxSign.getPublicHeaders(null);
+//            paramHeaders = AppSign.getPublicHeaders(null);
 //        }
 //        Headers.Builder headers = new Headers.Builder();
 //        if (paramHeaders != null && !paramHeaders.isEmpty()) {

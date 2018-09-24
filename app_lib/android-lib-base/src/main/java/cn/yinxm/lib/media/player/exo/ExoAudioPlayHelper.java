@@ -88,7 +88,7 @@ public class ExoAudioPlayHelper implements ExoPlayer.EventListener, IPlayHelper 
 
 // 2. Create a default LoadControl
 //        LoadControl loadControl = new DefaultLoadControl();
-        LoadControl loadControl = new EcarxFastPlayLoadControl();
+        LoadControl loadControl = new AppFastPlayLoadControl();
 
 // 3. Create the player
         player = ExoPlayerFactory.newSimpleInstance(context, trackSelector, loadControl);

@@ -1,6 +1,4 @@
-/*
- * Copyright (C) 2018 Baidu, Inc. All Rights Reserved.
- */
+
 package cn.yinxm.lib.screen;
 
 import android.content.Context;

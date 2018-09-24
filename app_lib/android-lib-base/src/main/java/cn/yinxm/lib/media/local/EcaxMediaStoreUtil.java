@@ -48,8 +48,8 @@ public class EcaxMediaStoreUtil {
                             MediaStore.Images.ImageColumns.HEIGHT
                     };
             synchronized (object) {
-                for (int i = 0; i < EcarxMediaStoreConstant.URI_IMAGES.length; i++) {
-                    Uri uri = EcarxMediaStoreConstant.URI_IMAGES[i];
+                for (int i = 0; i < AppMediaStoreConstant.URI_IMAGES.length; i++) {
+                    Uri uri = AppMediaStoreConstant.URI_IMAGES[i];
                     LogUtil.d("uri=" + uri.toString());
 
                     Cursor cursor = contentResolver.query(uri, projection, null, null, null);

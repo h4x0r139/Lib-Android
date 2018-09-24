@@ -15,14 +15,14 @@ public class CharacterUtil {
       System.out.println(isMessyCode("Ã©Å¸Â©Ã©Â¡ÂºÃ¥Â¹Â³"));
       System.out.println(isMessyCode("你好"));
       System.out.println("1="+isMessyCode("��"));
-      System.out.println("2="+isMessyCode("+8617097212908@ecarx.m800-api.com_###_+8617097212908@ecarx.m800-api.com.out.1491993133000.YTw"));
+      System.out.println("2="+isMessyCode("+8617097212908@app.m800-api.com_###_+8617097212908@app.m800-api.com.out.1491993133000.YTw"));
       System.out.println("3="+isMessyCode("坚挺爱十分aweohhasd阿斯顿发hi啊!！@#%……&*（）——+？“。"));
       System.out.println("4="+isMessyCode("坚挺爱十分aweohhasd阿斯顿发hi啊"));
       
       System.out.println("10"+CharacterUtil.filterMessyCode("Ã©Å¸Â©Ã©Â¡ÂºÃ¥Â¹Â³"));
       System.out.println("11"+CharacterUtil.filterMessyCode("Ã©Å¸Â©Ã©Â你好¡ÂºÃ¥哈哈Â¹Â³"));
       System.out.println("1="+CharacterUtil.filterMessyCode("��你，阿斯顿发had"));//判断错误
-      System.out.println("2="+CharacterUtil.filterMessyCode("+8617097212908@ecarx.m800-api.com_###_+8617097212908@ecarx.m800-api.com.out.1491993133000.YTw"));
+      System.out.println("2="+CharacterUtil.filterMessyCode("+8617097212908@app.m800-api.com_###_+8617097212908@app.m800-api.com.out.1491993133000.YTw"));
       System.out.println("3="+CharacterUtil.filterMessyCode("坚挺爱十分aweohhasd阿斯顿发hi啊!！@#%……&*（）——+？“。"));
       System.out.println("4="+CharacterUtil.filterMessyCode("坚挺爱十分aweohhasd阿斯顿发hi啊"));
 	}*/

@@ -1,6 +1,4 @@
-/*
- * Copyright (C) 2016 Baidu, Inc. All Rights Reserved.
- */
+
 package cn.yinxm.lib.utils;
 
 import java.text.SimpleDateFormat;

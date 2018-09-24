@@ -11,7 +11,7 @@ import android.os.Bundle;
 
 import java.util.List;
 
-import cn.yinxm.lib.map.iml.DefaultEcarxLocationIml;
+import cn.yinxm.lib.map.iml.DefaultAppLocationIml;
 import cn.yinxm.lib.utils.log.LogUtil;
 
 
@@ -138,7 +138,7 @@ public class LocationApi {
                     String street = address.getThoroughfare();
                     String featureName = address.getFeatureName();//周边地址
                     String addressDetail = province + city + district + street + featureName;
-                    customLocation = new DefaultEcarxLocationIml(longitude, latitude, addressDetail, country, province, city, district, street);
+                    customLocation = new DefaultAppLocationIml(longitude, latitude, addressDetail, country, province, city, district, street);
                 }
             }
 

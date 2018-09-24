@@ -8,7 +8,7 @@ import android.provider.MediaStore;
  * 功能: 媒体数据库枚举
  */
 
-public class EcarxMediaStoreConstant {
+public class AppMediaStoreConstant {
 
     private static final String CAR_SD_CARD = "external_sd";//外置sd卡
     private static final String CAR_UDISK = "udisk";//挂载的USB接口

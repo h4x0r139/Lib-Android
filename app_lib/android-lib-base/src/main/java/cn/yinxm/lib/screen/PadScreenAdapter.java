@@ -1,4 +1,4 @@
-package com.baidu.media.ui.util;
+package cn.yinxm.lib.screen;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -7,7 +7,6 @@ import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
-import cn.yinxm.lib.screen.ScreenUtil;
 
 /**
  * 车机UI稿一般会设计成1:1的，在使用UI稿标注的时候rd也一般用的mdpi（uiScale=1），可以使用此工具适配车机、手机
@@ -31,10 +30,10 @@ public class PadScreenAdapter {
 
     private static class SingleHolder {
 
-        private static final com.baidu.media.ui.util.PadScreenAdapter INSTANCE = new com.baidu.media.ui.util.PadScreenAdapter();
+        private static final PadScreenAdapter INSTANCE = new PadScreenAdapter();
     }
 
-    public static com.baidu.media.ui.util.PadScreenAdapter getInstance() {
+    public static PadScreenAdapter getInstance() {
         return SingleHolder.INSTANCE;
     }
 
@@ -47,7 +46,7 @@ public class PadScreenAdapter {
      * @param uiHeight UI稿高
      * @param uiScale  标注或者切图采用的UI稿倍数
      */
-    public com.baidu.media.ui.util.PadScreenAdapter setUiDesign(Context context, int uiWidth, int uiHeight, float uiScale) {
+    public PadScreenAdapter setUiDesign(Context context, int uiWidth, int uiHeight, float uiScale) {
         if (context == null || uiWidth <= 0 || uiHeight <= 0 || uiScale <= 0) {
             throw new RuntimeException(
                     new IllegalArgumentException("illegal argument context=" + context + ", "

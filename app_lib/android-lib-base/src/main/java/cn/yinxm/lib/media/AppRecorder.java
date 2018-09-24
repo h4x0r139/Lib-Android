@@ -20,7 +20,7 @@ import cn.yinxm.lib.utils.StringUtil;
  *
  * @author yinxm
  */
-public class EcarxRecorder {
+public class AppRecorder {
     public static final int VOICE_LEVEL = 2;//2级音频
     private MediaRecorder mRecorder;
     private File file;
@@ -40,11 +40,11 @@ public class EcarxRecorder {
 
     private boolean isUpdateVoiceLevel = false;//是否更新音量级别
 
-    public EcarxRecorder(Context context, String fileDir) {
+    public AppRecorder(Context context, String fileDir) {
         this(context, fileDir, null);
     }
 
-    public EcarxRecorder(Context context, String fileDir, Handler handler) {
+    public AppRecorder(Context context, String fileDir, Handler handler) {
         mContext=context;
         isRecording = false;
         if (StringUtil.isBlank(fileDir)) {
@@ -75,7 +75,7 @@ public class EcarxRecorder {
     }
 
     public void startRecord() {
-        LogUtil.d("[EcarxRecorder.startRecord] isRecording=" + isRecording + ", mRecorder=" + mRecorder);
+        LogUtil.d("[AppRecorder.startRecord] isRecording=" + isRecording + ", mRecorder=" + mRecorder);
 //            new Thread(recordThread).start();
         executorService.submit(recordThread);
     }
@@ -86,7 +86,7 @@ public class EcarxRecorder {
      * @return 录音时长
      */
     public float stopRecord() {
-        LogUtil.d("[EcarxRecorder.stopRecord] isRecording=" + isRecording + "， mRecorder=" + mRecorder + ", recordFilePath=" + recordFilePath);
+        LogUtil.d("[AppRecorder.stopRecord] isRecording=" + isRecording + "， mRecorder=" + mRecorder + ", recordFilePath=" + recordFilePath);
         isUpdateVoiceLevel = false;
         if (mRecorder != null) {
             try {
@@ -126,7 +126,7 @@ public class EcarxRecorder {
      * @return seconds of the voice recorded
      */
     public void cancelRecord() {
-        LogUtil.d("[EcarxRecorder.cancelRecord] isRecording=" + isRecording + "， mRecorder=" + mRecorder);
+        LogUtil.d("[AppRecorder.cancelRecord] isRecording=" + isRecording + "， mRecorder=" + mRecorder);
         isUpdateVoiceLevel = false;
         if (mRecorder != null) {
             try {
@@ -270,7 +270,7 @@ public class EcarxRecorder {
 //                LogUtil.d("sleep end");
 
                 isUserCancel = false;
-                LogUtil.d("EcarxRecorder.RecordThread mRecorder=" + mRecorder);
+                LogUtil.d("AppRecorder.RecordThread mRecorder=" + mRecorder);
                 try {
                     mRecorder.prepare();
                 } catch (Exception e) {
@@ -317,7 +317,7 @@ public class EcarxRecorder {
                 }
 
             } catch (Exception e) {
-                LogUtil.e("EcarxRecorder.startRecord 录音异常", e);
+                LogUtil.e("AppRecorder.startRecord 录音异常", e);
             }
         }
     }

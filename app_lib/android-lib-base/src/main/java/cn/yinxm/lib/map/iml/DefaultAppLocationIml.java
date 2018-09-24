@@ -7,7 +7,7 @@ import cn.yinxm.lib.map.ICustomLocation;
  * 功能:
  */
 
-public class DefaultEcarxLocationIml implements ICustomLocation {
+public class DefaultAppLocationIml implements ICustomLocation {
     /**
      * 获取经度
      * @return
@@ -59,15 +59,15 @@ public class DefaultEcarxLocationIml implements ICustomLocation {
     private String street;
 
 
-    public DefaultEcarxLocationIml() {
+    public DefaultAppLocationIml() {
     }
 
-    public DefaultEcarxLocationIml(double longitude, double latitude) {
+    public DefaultAppLocationIml(double longitude, double latitude) {
         this.longitude = longitude;
         this.latitude = latitude;
     }
 
-    public DefaultEcarxLocationIml(double longitude, double latitude, String address, String country, String province, String city, String district, String street) {
+    public DefaultAppLocationIml(double longitude, double latitude, String address, String country, String province, String city, String district, String street) {
         this.longitude = longitude;
         this.latitude = latitude;
         this.address = address;
