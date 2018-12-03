@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/tvProducer"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:gravity="center_vertical"
+        android:text="生产者:" />
+
+    <EditText
+        android:id="@+id/etProducer"
+        android:layout_width="50dp"
+        android:layout_height="60dp"
+        android:text="1"
+        app:layout_constraintLeft_toRightOf="@id/tvProducer" />
+
+    <TextView
+        android:id="@+id/tvConsumer"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginLeft="5dp"
+        android:gravity="center_vertical"
+        android:text="消费者:"
+        app:layout_constraintLeft_toRightOf="@id/etProducer" />
+
+    <EditText
+        android:id="@+id/etConsumer"
+        android:layout_width="50dp"
+        android:layout_height="60dp"
+        android:text="1"
+        app:layout_constraintLeft_toRightOf="@id/tvConsumer" />
+
+    <TextView
+        android:id="@+id/tvCapacity"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginLeft="5dp"
+        android:gravity="center_vertical"
+        android:text="队列容量:"
+        app:layout_constraintLeft_toRightOf="@id/etConsumer" />
+
+    <EditText
+        android:id="@+id/etCapacity"
+        android:layout_width="50dp"
+        android:layout_height="60dp"
+        android:text="3"
+        app:layout_constraintLeft_toRightOf="@id/tvCapacity" />
+
+    <!--    <TextView
+            app:layout_constraintTop_toBottomOf="@id/tvProducer"
+            android:text="实现策略"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp" />-->
+    <Button
+        android:id="@+id/btnStartBQ"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:text="开始，使用BlockingQueue"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvProducer" />
+
+    <Button
+        android:id="@+id/btnStartWN"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:text="开始，使用Wait-Notify"
+        android:textAllCaps="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnStartBQ" />
+
+    <Button
+        android:id="@+id/btnStartLC"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:text="开始，使用Lock-Condition"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnStartWN" />
+
+    <Button
+        android:id="@+id/btnStartBetterLC"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:text="开始，使用优化后的Lock-Condition"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnStartLC" />
+
+    <Button
+        android:id="@+id/btnClear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="清除"
+        app:layout_constraintTop_toBottomOf="@id/btnStartBetterLC" />
+
+    <Button
+        android:id="@+id/btnStop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="停止"
+        app:layout_constraintBaseline_toBaselineOf="@id/btnClear"
+        app:layout_constraintLeft_toRightOf="@id/btnClear" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
+        app:layout_constraintTop_toBottomOf="@id/btnClear">
+
+        <TextView
+            android:id="@+id/tvInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />]
+    </ScrollView>
+
+
+</android.support.constraint.ConstraintLayout>

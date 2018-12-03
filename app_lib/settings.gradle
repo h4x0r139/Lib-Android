@@ -1,0 +1,3 @@
+include ':app'
+include ':myandroidtest', ':log_demo', ':log_lib'
+include 'android-lib-base'

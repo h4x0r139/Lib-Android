@@ -1,0 +1,18 @@
+
+
+ext {
+    javaVersion = 7
+    javaMaxHeapSize = '2G'
+    sourceCompatibility = JavaVersion.VERSION_1_7
+    targetCompatibility = JavaVersion.VERSION_1_7
+
+    compileSdkVersion = 27
+    buildToolsVersion = "27.0.3"
+
+    minSdkVersion = 16
+    targetSdkVersion = 22
+
+    supportLib = "27.1.1"
+    constraintLib = "1.1.2" //1.1.0
+    recycleView = supportLib
+}

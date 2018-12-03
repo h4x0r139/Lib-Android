@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <Button
+        android:id="@+id/btnConcurrentTest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="clickConcurrent"
+        android:text="并发队列测试" />
+
+    <Button
+        android:id="@+id/btnZxingTest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="clickQRcode"
+        app:layout_constraintLeft_toRightOf="@id/btnConcurrentTest"
+        android:text="二维码"/>
+
+    <Button
+        android:id="@+id/btnDesign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="clickDesign"
+        app:layout_constraintLeft_toRightOf="@id/btnZxingTest"
+        android:text="设计模式"/>
+
+     <Button
+        android:id="@+id/btnCache"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="clickCacheTest"
+        app:layout_constraintLeft_toRightOf="@id/btnZxingTest"
+        android:text="Cache测试"/>
+
+
+
+</android.support.constraint.ConstraintLayout>
