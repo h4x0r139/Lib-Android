@@ -3,7 +3,6 @@ package cn.yinxm.lib.api.manager;
 import android.app.Activity;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;

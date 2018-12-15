@@ -63,6 +63,8 @@ public final class Base64Utils {
     /**
      * Encodes hex octects into Base64Utils
      *
+     * 等效于Android api： Base64.encode(plainBytes, Base64.NO_WRAP);
+     *
      * @param binaryData Array containing binaryData
      * @return Encoded Base64Utils array
      */
