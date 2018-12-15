@@ -5,7 +5,9 @@ import android.app.Activity;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * 应用Activity管理
@@ -23,11 +25,15 @@ public class AppActivityManager {
     /**
      * 所有活动的Activity
      */
-    private List<WeakReference<Activity>> allActivityList = new ArrayList<>();
+    private List<WeakReference<Activity>> allActivityList = new LinkedList<>();
     /**
      * Activity显示计数器
      */
     private int count = 0;
+
+    private List<OnAppStateCallback> appStateCallbackList = new
+            CopyOnWriteArrayList<>();
+
 
     private AppActivityManager() {
     }
@@ -47,11 +53,7 @@ public class AppActivityManager {
      * @return
      */
     public boolean isAppRunForeground() {
-        if (count > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return count > 0;
     }
 
     /**
@@ -74,11 +76,19 @@ public class AppActivityManager {
     }
 
     public void onActivityStart(Activity activity) {
+        boolean isRunForegroundBefore = isAppRunForeground();
         count += 1;
+        if (!isRunForegroundBefore && isAppRunForeground()) {
+            notifyAppOnStart();
+        }
     }
 
     public void onActivityStopped(Activity activity) {
+        boolean isRunForegroundBefore = isAppRunForeground();
         count -= 1;
+        if (isRunForegroundBefore && !isAppRunForeground()) {
+            notifyAppOnStop();
+        }
     }
 
 
@@ -90,7 +100,7 @@ public class AppActivityManager {
     public void onActivityCreated(Activity activity) {
         if (allActivityList != null && activity != null && !activity.isFinishing()) {
             WeakReference<Activity> reference = new WeakReference<Activity>(activity);
-            allActivityList.add(reference);
+            allActivityList.add(0, reference);
         }
     }
 
@@ -148,5 +158,63 @@ public class AppActivityManager {
             currentActivity = currentActivityWeakRef.get();
         }
         return currentActivity;
+    }
+
+    public void registerAppStateCallback(OnAppStateCallback appStateCallback) {
+        if (appStateCallback != null) {
+            appStateCallbackList.add(appStateCallback);
+        }
+    }
+
+    public void unregisterAppStateCallback(OnAppStateCallback appStateCallback) {
+        if (appStateCallback != null) {
+            Iterator<OnAppStateCallback> iterator = appStateCallbackList.iterator();
+            while (iterator.hasNext()) {
+                OnAppStateCallback callback = iterator.next();
+                if (appStateCallback == callback) {
+                    appStateCallbackList.remove(appStateCallback);
+                    break;
+                }
+            }
+        }
+    }
+
+
+    public void notifyAppOnStart() {
+        Iterator<OnAppStateCallback> iterator = appStateCallbackList.iterator();
+        while (iterator != null && iterator.hasNext()) {
+            OnAppStateCallback listener = iterator.next();
+            if (listener != null) {
+                listener.onStart();
+            } else {
+                iterator.remove();
+            }
+        }
+    }
+
+    public void notifyAppOnStop() {
+        Iterator<OnAppStateCallback> iterator = appStateCallbackList.iterator();
+        while (iterator != null && iterator.hasNext()) {
+            OnAppStateCallback listener = iterator.next();
+            if (listener != null) {
+                listener.onStop();
+            } else {
+                iterator.remove();
+            }
+        }
+    }
+
+    public static class OnAppStateCallback {
+        /**
+         * app开始出现
+         */
+        public void onStart() {
+        }
+
+        /**
+         * app退到后台
+         */
+        public void onStop() {
+        }
     }
 }
