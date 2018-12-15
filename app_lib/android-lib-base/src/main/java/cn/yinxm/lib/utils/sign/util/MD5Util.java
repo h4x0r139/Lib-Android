@@ -15,8 +15,18 @@ public class MD5Util {
     public static String getMD5(String val, String charset) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         MessageDigest md5 = MessageDigest.getInstance("MD5");
         md5.update(val.getBytes(charset));
-        byte[] m = md5.digest();//加密
+        byte[] m = md5.digest();
         return getBytesToHexString(m);
+    }
+
+    public static byte[] getMD5(byte[] plainBytes) throws NoSuchAlgorithmException {
+        MessageDigest md5 = MessageDigest.getInstance("MD5");
+        md5.update(plainBytes);
+        return md5.digest();
+    }
+
+    public static String getMD5Str(byte[] plainBytes) throws NoSuchAlgorithmException {
+        return getBytesToHexString(getMD5(plainBytes));
     }
 
     public static String getBytesToHexString(byte[] src) {
@@ -38,6 +48,7 @@ public class MD5Util {
 
     /**
      * bd radio
+     *
      * @param s
      * @return
      */
