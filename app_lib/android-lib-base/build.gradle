@@ -23,7 +23,9 @@ android {
 dependencies {
 //    implementation fileTree(dir: 'libs', include: ['*.jar'])
 //    testImplementation 'junit:junit:4.12'
-    implementation 'com.android.support:appcompat-v7:' + rootProject.ext.supportLib
+    compileOnly 'com.android.support:appcompat-v7:' + rootProject.ext.supportLib
+    compileOnly 'com.android.support:recyclerview-v7:' + rootProject.ext.supportLib
+
     compileOnly 'com.google.android.exoplayer:exoplayer:r2.1.1'
     implementation files('libs/log4j-1.2.17.jar')
     implementation files('libs/android-logging-log4j-1.0.3.jar')
