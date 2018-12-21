@@ -1,6 +1,11 @@
 package cn.yinxm.lib.api.manager;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresPermission;
 
 import java.lang.ref.WeakReference;
 import java.util.Iterator;
@@ -30,8 +35,7 @@ public class AppActivityManager {
      */
     private int count = 0;
 
-    private List<OnAppStateCallback> appStateCallbackList = new
-            CopyOnWriteArrayList<>();
+    private List<OnAppStateCallback> appStateCallbackList = new CopyOnWriteArrayList<>();
 
 
     private AppActivityManager() {
@@ -215,5 +219,37 @@ public class AppActivityManager {
          */
         public void onStop() {
         }
+    }
+
+    /**
+     * 获取系统上处于最前台的app 信息
+     *
+     * @param context
+     * @return
+     */
+    @RequiresPermission(Manifest.permission.GET_TASKS)
+    public static TopActivityInfo getSystemTopActivityInfo(Context context) {
+        ActivityManager manager = ((ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE));
+        TopActivityInfo info = new TopActivityInfo();
+        if (Build.VERSION.SDK_INT >= 21) {
+            List<ActivityManager.RunningAppProcessInfo> pis = manager.getRunningAppProcesses();
+            ActivityManager.RunningAppProcessInfo topAppProcess = pis.get(0);
+            if (topAppProcess != null && topAppProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                info.packageName = topAppProcess.processName;
+                info.topActivityName = "";
+            }
+        } else {
+            //getRunningTasks() is deprecated since API Level 21 (Android 5.0)
+            List localList = manager.getRunningTasks(1);
+            ActivityManager.RunningTaskInfo localRunningTaskInfo = (ActivityManager.RunningTaskInfo) localList.get(0);
+            info.packageName = localRunningTaskInfo.topActivity.getPackageName();
+            info.topActivityName = localRunningTaskInfo.topActivity.getClassName();
+        }
+        return info;
+    }
+
+    public static class TopActivityInfo {
+        public String packageName = "";
+        public String topActivityName = "";
     }
 }
