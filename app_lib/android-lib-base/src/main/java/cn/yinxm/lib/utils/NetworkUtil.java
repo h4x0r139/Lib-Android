@@ -19,6 +19,7 @@ import java.util.Enumeration;
  * Created by yinxm on 2016/3/24.
  */
 public class NetworkUtil {
+    private static final String WIFI_PROFILE = "/etc/wpa_supplicant/wpa_supplicant.conf";
 
 
     /**

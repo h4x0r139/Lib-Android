@@ -30,9 +30,15 @@ public class FrequentEventQueue<T> {
     private int mMinInterval;
 
     /**
-     * 是否在子线程执行任务
+     * 是否在新的子线程处理事件， 默认是，会新建一个线程
      */
-    private boolean mIsRunWorkThread;
+    private boolean mIsProcessOnNewThread = true;
+
+    /**
+     * 是否在子线程执行最终回调任务
+     */
+    private boolean mIsCallbackOnWorkThread;
+
 
     /**
      * 事件待触发的任务
@@ -45,10 +51,15 @@ public class FrequentEventQueue<T> {
 
     private Handler mWorkHandler;
 
-    public FrequentEventQueue(int minInterval, EventTrigger eventTrigger, boolean isRunWorkThread) {
+    public FrequentEventQueue(int minInterval, EventTrigger eventTrigger, boolean isCallbackOnWorkThread) {
+        this(minInterval, eventTrigger, isCallbackOnWorkThread, true);
+    }
+
+    public FrequentEventQueue(int minInterval, EventTrigger eventTrigger, boolean isCallbackOnWorkThread, boolean isProcessOnNewThread) {
         mMinInterval = minInterval;
         mEventTrigger = eventTrigger;
-        mIsRunWorkThread = isRunWorkThread;
+        mIsCallbackOnWorkThread = isCallbackOnWorkThread;
+        mIsProcessOnNewThread = isProcessOnNewThread;
     }
 
     /**
@@ -56,15 +67,20 @@ public class FrequentEventQueue<T> {
      */
     public void start() {
         if (mWorkHandler == null) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    Looper.prepare();
-                    initWorkHanlder();
-                    Looper.loop();
-                }
-            }).start();
+            if (mIsProcessOnNewThread) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Looper.prepare();
+                        initWorkHanlder();
+                        Looper.loop();
+                    }
+                }).start();
+            }
+        } else {
+            initWorkHanlder();
         }
+
     }
 
     private void initWorkHanlder() {
@@ -76,20 +92,20 @@ public class FrequentEventQueue<T> {
                     switch (msg.what) {
                         case EVENT_LAST:
                         case EVENT_COME:
-
-                            if (System.currentTimeMillis() - mLastProcessedTime < mMinInterval) {
-                                LogUtil.e("Ignore calls that are too frequent ... ");
-                                removeMessages(EVENT_LAST);
+                            long currentTime = System.currentTimeMillis();
+                            if ((currentTime - mLastProcessedTime) < mMinInterval) {
+//                                LogUtil.e(TAG,"Ignore calls that are too frequent ... ");
                                 Message newMsg = obtainMessage(EVENT_LAST, msg.obj);
+                                removeMessages(EVENT_LAST);
                                 sendMessageDelayed(newMsg, mMinInterval);
                                 return;
                             }
-                            mLastProcessedTime = System.currentTimeMillis();
+                            mLastProcessedTime = currentTime;
                             if (mEventTrigger == null) {
                                 return;
                             }
                             final Object obj = msg.obj;
-                            if (!mIsRunWorkThread) {
+                            if (!mIsCallbackOnWorkThread) {
                                 mHandler.post(new Runnable() {
                                     @Override
                                     public void run() {
@@ -116,8 +132,9 @@ public class FrequentEventQueue<T> {
      */
     public void onNewEvent(T t) {
         if (mWorkHandler != null) {
+            Message message = mWorkHandler.obtainMessage(EVENT_COME, t);
+            mWorkHandler.removeMessages(EVENT_LAST);
             mWorkHandler.removeMessages(EVENT_COME);
-            Message message = Message.obtain(mWorkHandler, EVENT_COME, t);
             mWorkHandler.sendMessage(message);
         }
     }
