@@ -156,6 +156,16 @@ public class DimenAdaptUtil {
         writeFile(destDimensFile, stringBuilder.toString());
     }
 
+    /**
+     * 将原有的dp值，改为dimens适配，即：10dp->dip_10
+     */
+    public static void replaceDp2Dimens(String filePath) {
+        File dirFile = new File(filePath);
+        File[] files = dirFile.listFiles();
+        System.out.println(files);
+
+    }
+
 
     public static void main(String[] args) throws Exception {
 //        genDimens(
@@ -164,8 +174,10 @@ public class DimenAdaptUtil {
 //        );
 
         //所有字体值-2
-        changeDimens("D:\\androidCode\\BanTing2.0_Git\\BanTing\\huiting\\src\\main\\res\\values-sw720dp-land\\dimens.xml"
-                , "D:\\dimens.xml"
-                , 2, -2.0, 1);
+//        changeDimens("D:\\androidCode\\BanTing2.0_Git\\BanTing\\huiting\\src\\main\\res\\values-sw720dp-land\\dimens.xml"
+//                , "D:\\dimens.xml"
+//                , 2, -2.0, 1);
+//        replaceDp2Dimens("/Users/yinxuming/work/code/mygit/Lib-Android/app_lib/android-lib-base/src/main/res");
+        System.out.println("test ...");
     }
 }

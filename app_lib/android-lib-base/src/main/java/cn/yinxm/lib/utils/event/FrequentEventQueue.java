@@ -20,6 +20,8 @@ import cn.yinxm.lib.utils.log.LogUtil;
  * @date 2018/11/1
  */
 public class FrequentEventQueue<T> {
+    private static final String TAG = "FrequentEventQueue";
+
 
     private static final int EVENT_COME = 1;
     private static final int EVENT_LAST = 2;
@@ -55,6 +57,12 @@ public class FrequentEventQueue<T> {
         this(minInterval, eventTrigger, isCallbackOnWorkThread, true);
     }
 
+    /**
+     * @param minInterval            处理最小间隔
+     * @param eventTrigger           处理回调
+     * @param isCallbackOnWorkThread 结果回调是否在子线程执行
+     * @param isProcessOnNewThread   队列处理是否在子线程执行
+     */
     public FrequentEventQueue(int minInterval, EventTrigger eventTrigger, boolean isCallbackOnWorkThread, boolean isProcessOnNewThread) {
         mMinInterval = minInterval;
         mEventTrigger = eventTrigger;

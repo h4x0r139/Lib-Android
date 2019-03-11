@@ -21,13 +21,13 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import cn.yinxm.FrequentEventQueue;
+import cn.yinxm.lib.utils.event.FrequentEventQueue;
 import cn.yinxm.test.R;
 
 
 /**
  * Created by yinxuming on 2018/6/8. 频繁点击拖动问题解决
- * 1、耗时操作方子线程执行
+ * 1、耗时操作放子线程执行
  * 2、事件消息到来，放入队列前，先清空队列里面未处理的消息
  */
 public class FrequentClicksFragment extends Fragment {
