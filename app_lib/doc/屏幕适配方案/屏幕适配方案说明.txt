@@ -1,0 +1,13 @@
+
+
+ScreenAdapter在8.0以上系统，会高频偶现字体、宽高放大，应该是调用系统api update density失败，从ScreenAdapter迁移到Android原生适配过程
+迁移使用Dp2DimensAdaptUtil 辅助（查找-计算-替换）
+
+1、确定车机屏幕的分辨率，屏幕密度160dpi-mdpi-1，240dpi-hdpi-1.5等
+2、将原有mdpi中的图片，移动到mipmap-hdpi中
+3、layout中的dp、sp值除以屏幕实际的density，例如福特实际density为1.5，原来的15dp变成10dp
+4、所有的Java代码中的像素也要除以屏幕实际的density，特别是自定义view、调用ScreenUtil#dp2px的地方
+
+
+新项目：
+1.不要再用mdpi来做，根据车机实际屏幕密度来做，车机是hdpi，就用hdpi的标注宽高、图片放mipmap-hdpi
