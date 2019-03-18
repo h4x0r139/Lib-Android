@@ -30,8 +30,9 @@ public class Dp2DimensAdaptUtil {
 
         // 公共ui
 //        findFile2Relace("/Users/yinxuming/work/code/media/carradio/ui-base/src/main/res", 0.6667f);
+        findFile2Relace("/Users/yinxuming/work/code/mygit/TestWeb/TestWeb01/src/org/test/mytest/file/modify/test.xml", 0.6667f);
 
-        mdpi2AnyDpiMapping(1.0f / 1.5f);
+//        mdpi2AnyDpiMapping(1.0f / 1.5f);
 
     }
 
@@ -116,31 +117,59 @@ public class Dp2DimensAdaptUtil {
             str = readFile(file);
             if (str != null && str.length() > 0) {
                 Matcher matcher = pattern.matcher(str);
-                Map<String, String> replaceMap = new HashMap<>();
+
+
+                TreeMap<Float, Map<String, String>> replaceMaps = new TreeMap<>();
+
+
                 while (matcher.find()) {
-                    isModify = true;
-                    System.out.println("groupCount=" + matcher.groupCount() + ", " + matcher.group() + ", " + matcher.group(0) + ", " + matcher.group(1) + ", " + matcher.group(2) + ", " + matcher.group(3));
+//                    System.out.println("groupCount=" + matcher.groupCount() + ", " + matcher.group() + ", " + matcher.group(0) + ", " + matcher.group(1) + ", " + matcher.group(2) + ", " + matcher.group(3));
                     float numF = Float.parseFloat(matcher.group(1));
                     String numStr = null;
                     if (numF < 5) {
                         // 比较小的数，使用float，保留一位小数
                         float num = (numF * scale);
+                        if (num == numF) {
+                            continue;
+                        }
                         numStr = String.format("%.1f", num);
+                        if (num == 0) {
+                            numStr = "0";
+                        }
                     } else {
                         int num = (int) (numF * scale);
+                        if (num == numF) {
+                            continue;
+                        }
                         numStr = "" + num;
                     }
 
-                    System.err.println(numF + "——》" + numStr);
+                    isModify = true;
+
+//                    System.err.println(numF + "——》" + numStr);
                     String key = matcher.group();
                     String value = "\"" + numStr + matcher.group(3) + "\"";
-                    replaceMap.put(key, value);
+
+                    Map itemMap = replaceMaps.get(numF);
+                    if (itemMap == null) {
+                        itemMap = new HashMap();
+                    }
+
+                    itemMap.put(key, value);
+                    replaceMaps.put(numF, itemMap);
                 }
 
                 if (isModify) {
-                    Set<Map.Entry<String, String>> set = replaceMap.entrySet();
-                    for (Map.Entry<String, String> entry : set) {
-                        str = str.replaceAll(entry.getKey(), entry.getValue());
+                    // 从小替换到大，否则出现循环替换问题：75-》50，50-》33，结果75-》33
+                    Set<Map.Entry<Float, Map<String, String>>> set = replaceMaps.entrySet();
+
+                    for (Map.Entry<Float, Map<String, String>> entry : set) {
+                        Map<String, String> itemMap = entry.getValue();
+
+                        for (Map.Entry<String, String> entryInternal : itemMap.entrySet()) {
+                            System.err.println(entryInternal.getKey() + "  ->  " + entryInternal.getValue());
+                            str = str.replaceAll(entryInternal.getKey(), entryInternal.getValue());
+                        }
                     }
                 }
             }

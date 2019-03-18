@@ -4,12 +4,11 @@ import android.content.Context;
 import android.os.Looper;
 import android.text.TextUtils;
 
+import com.baidu.android.ApplicationManager;
 
 import java.net.URL;
 import java.net.URLConnection;
 
-import cn.yinxm.lib.api.manager.AppManager;
-import cn.yinxm.lib.utils.log.LogUtil;
 
 /**
  * Created by yinxm on 2017/3/27.
@@ -17,12 +16,29 @@ import cn.yinxm.lib.utils.log.LogUtil;
  */
 
 public class SystemTimeUtil {
-    public static final long ALLOW_ERROR_MILLISECOND = 40000;   // 允许误差40s，超过这个误差，取网络时间
-    public static final long TIME_SYNC_INTERVAL_MILLISECOND = 10 * 60 * 1000;   // 同步时间最小间隔10分钟
+    private static final String TAG = "SystemTimeUtil";
 
-    public static final String SP_CONFIG = "config_time";//上一次同步时间的时间
-    public static final String SP_TIME_LAST_SYNC = "time_last_sync";//上一次同步时间的时间
-    public static final String SP_TIME_NET_DIFF_SYS = "time_diff";//时间相差
+    /**
+     * 允许误差40s，超过这个误差，取网络时间
+     */
+    public static final long ALLOW_ERROR_MILLISECOND = 40000;
+    /**
+     * 同步时间最小间隔10分钟
+     */
+    public static final long TIME_SYNC_INTERVAL_MILLISECOND = 10 * 60 * 1000;
+
+    /**
+     * 上一次同步时间的时间
+     */
+    public static final String SP_CONFIG = "config_time";
+    /**
+     * 上一次同步时间的时间
+     */
+    public static final String SP_TIME_LAST_SYNC = "time_last_sync";
+    /**
+     * 时间相差
+     */
+    public static final String SP_TIME_NET_DIFF_SYS = "time_diff";
 
     /**
      * 获取校正后的系统时间
@@ -32,7 +48,7 @@ public class SystemTimeUtil {
     public static long getCorrectSystemTime() {
         long currentTime = 0;
         try {
-            Context context = AppManager.getInstance().getApplicationContext();
+            Context context = ApplicationManager.getInstance().getContext();
             if (context == null) {
                 currentTime = System.currentTimeMillis();
             } else {
@@ -47,13 +63,13 @@ public class SystemTimeUtil {
                 if (!TextUtils.isEmpty(lastSync)) {
                     lastSyncLong = Long.parseLong(lastSync);
                 }
-//                LogUtil.d("lastSync=" + lastSync+", netDifSys="+netDifSys);
+//                LogUtil.d(TAG, "lastSync=" + lastSync+", netDifSys="+netDifSys);
                 if (lastSyncLong == 0 || System.currentTimeMillis() > (lastSyncLong + TIME_SYNC_INTERVAL_MILLISECOND)) {
                     if (Looper.getMainLooper() == Looper.myLooper()) {
-//                        LogUtil.d("Main UI Thead");
+//                        LogUtil.d(TAG, "Main UI Thead");
                         syncNetTime();
                     } else {
-//                        LogUtil.d("Child Thead");
+//                        LogUtil.d(TAG, "Child Thead");
                         netDifSys = getNetTimeDifSys();
                     }
                 }
@@ -61,7 +77,7 @@ public class SystemTimeUtil {
                 currentTime = localTime;
                 currentTime = currentTime + netDifSys;
                 if (netDifSys > 0) {
-                    LogUtil.d("校正前时间：" + localTime + ", 校正后时间：" + currentTime + ", 误差：" + netDifSys);
+                    LogUtil.d(TAG, "校正前时间：" + localTime + ", 校正后时间：" + currentTime + ", 误差：" + netDifSys);
                 }
             }
         } catch (Exception e) {
@@ -75,10 +91,10 @@ public class SystemTimeUtil {
      * 获取时间差
      */
     public static long getNetTimeDifSys() {
-//        LogUtil.d("syncNetTime ");
+//        LogUtil.d(TAG, "syncNetTime ");
         long netDifSys = 0;
 
-        Context context = AppManager.getInstance().getApplicationContext();
+        Context context = ApplicationManager.getInstance().getContext();
         if (context == null) {
             return netDifSys;
         }
@@ -87,21 +103,20 @@ public class SystemTimeUtil {
         if (!TextUtils.isEmpty(lastSync)) {
             lastSyncLong = Long.parseLong(lastSync);
         }
-//        LogUtil.d("lastSync=" + lastSync);
+//        LogUtil.d(TAG, "lastSync=" + lastSync);
 
         try {
             long netTime = getNetTime();
             if (netTime > 0) {
-                long sysTime = System.currentTimeMillis();//ms
-                //允许误差40s=40 000ms
+                long sysTime = System.currentTimeMillis();
                 netDifSys = netTime - sysTime;
-                LogUtil.d("sysTime=" + sysTime + ", netTime=" + netTime + ", netDifSys=" + netDifSys);
+                LogUtil.d(TAG, "sysTime=" + sysTime + ", netTime=" + netTime + ", netDifSys=" + netDifSys);
 
                 if (Math.abs(netDifSys) > ALLOW_ERROR_MILLISECOND) {
-                    LogUtil.d("当前系统时间不正确 netDifSys=" + netDifSys);
+                    LogUtil.d(TAG, "当前系统时间不正确 netDifSys=" + netDifSys);
                     SpUtil.spWriteStr(context, SP_CONFIG, SP_TIME_NET_DIFF_SYS, String.valueOf(netDifSys));
                 } else {
-                    LogUtil.d("当前系统时间正确 netDifSys=" + netDifSys);
+                    LogUtil.d(TAG, "当前系统时间正确 netDifSys=" + netDifSys);
                     SpUtil.spWriteStr(context, SP_CONFIG, SP_TIME_NET_DIFF_SYS, "");
                 }
                 SpUtil.spWriteStr(context, SP_CONFIG, SP_TIME_LAST_SYNC, String.valueOf(sysTime));
@@ -116,9 +131,9 @@ public class SystemTimeUtil {
      * 同步网络时间
      */
     public static void syncNetTime() {
-        LogUtil.d("syncNetTime ");
+        LogUtil.d(TAG, "syncNetTime ");
 
-        final Context context = AppManager.getInstance().getApplicationContext();
+        final Context context = ApplicationManager.getInstance().getContext();
         if (context == null) {
             return;
         }
@@ -127,7 +142,7 @@ public class SystemTimeUtil {
         if (!TextUtils.isEmpty(lastSync)) {
             lastSyncLong = Long.parseLong(lastSync);
         }
-//        LogUtil.d("lastSync=" + lastSync);
+//        LogUtil.d(TAG, "lastSync=" + lastSync);
 //        if (lastSyncLong == 0 || System.currentTimeMillis() > (lastSyncLong + TIME_SYNC_INTERVAL_MILLISECOND)) {
         new Thread(new Runnable() {
             @Override
@@ -135,16 +150,15 @@ public class SystemTimeUtil {
                 try {
                     long netTime = getNetTime();
                     if (netTime > 0) {
-                        long sysTime = System.currentTimeMillis();//ms
-                        // 允许误差40s=40 000ms
+                        long sysTime = System.currentTimeMillis();
                         long netDifSys = netTime - sysTime;
-                        LogUtil.d("sysTime=" + sysTime + ", netTime=" + netTime + ", netDifSys=" + netDifSys);
+                        LogUtil.d(TAG, "sysTime=" + sysTime + ", netTime=" + netTime + ", netDifSys=" + netDifSys);
 
                         if (Math.abs(netDifSys) > ALLOW_ERROR_MILLISECOND) {
-//                            LogUtil.d("当前系统时间不正确 netDifSys=" + netDifSys);
+//                            LogUtil.d(TAG, "当前系统时间不正确 netDifSys=" + netDifSys);
                             SpUtil.spWriteStr(context, SP_CONFIG, SP_TIME_NET_DIFF_SYS, String.valueOf(netDifSys));
                         } else {
-//                            LogUtil.d("当前系统时间正确 netDifSys=" + netDifSys);
+//                            LogUtil.d(TAG, "当前系统时间正确 netDifSys=" + netDifSys);
                             SpUtil.spWriteStr(context, SP_CONFIG, SP_TIME_NET_DIFF_SYS, "");
                         }
                         SpUtil.spWriteStr(context, SP_CONFIG, SP_TIME_LAST_SYNC, String.valueOf(sysTime));
@@ -168,15 +182,16 @@ public class SystemTimeUtil {
      */
     public static long getNetTime() {
         long time = 0;
-            try {
-                URL url = new URL("http://www.beijing-time.org");
-                URLConnection urlConnection = url.openConnection();
-                urlConnection.connect();
-                time = urlConnection.getDate();
-            } catch (Exception e) {
-                LogUtil.e(e);
-            }
-            LogUtil.d("getNetTime time=" + time);
+        try {
+//            URL url = new URL("http://www.beijing-time.org");
+            URL url = new URL("http://www.baidu.com");
+            URLConnection urlConnection = url.openConnection();
+            urlConnection.connect();
+            time = urlConnection.getDate();
+        } catch (Exception e) {
+            LogUtil.e(e);
+        }
+        LogUtil.d(TAG, "getNetTime time=" + time);
         return time;
     }
 }
