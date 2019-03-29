@@ -11,7 +11,7 @@ import java.io.Serializable;
  * Created by yinxm on 2017/3/15.
  * 功能: Bean工具类
  * 两种方式
- * 1、字节数组写入写出，枚举是否会有问题？
+ * 1、字节数组写入写出，枚举是否会有问题？不会有问题
  * 2、实现Cloneable接口，clone方法，内部只有基本数据类型
  */
 
