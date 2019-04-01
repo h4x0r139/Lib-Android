@@ -36,7 +36,7 @@
         </receiver>
 
         <activity
-            android:name=".activity.WebViewActivity"
+            android:name="cn.yinxm.lib.view.webview.WebViewActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 

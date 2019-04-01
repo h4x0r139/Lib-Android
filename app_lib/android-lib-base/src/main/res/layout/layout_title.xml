@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guide_line1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="75dp" />
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:contentDescription="返回"
+        android:scaleType="centerInside"
+        android:src="@mipmap/back_back"
+        app:layout_constraintBottom_toBottomOf="@+id/guide_line1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guide_line1" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:singleLine="true"
+        android:textColor="@android:color/white"
+        android:textSize="42sp"
+        app:layout_constraintBottom_toBottomOf="@+id/guide_line1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guide_line1" />
+
+    <View
+        android:id="@+id/title_bottom_line"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="63dp"
+        android:background="@color/white_trans10"
+        app:layout_constraintTop_toBottomOf="@+id/guide_line1" />
+</merge>
