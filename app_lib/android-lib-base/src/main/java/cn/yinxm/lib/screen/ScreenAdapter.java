@@ -11,6 +11,17 @@ import android.util.Log;
 /**
  * 车机UI稿一般会设计成1:1的，在使用UI稿标注的时候rd也一般用的mdpi（uiScale=1），可以使用此工具适配车机、手机
  * <p>
+ * 注意ScreenAdapter调用时机
+ * 1、Application中：
+ * setUiDesign
+ * adaptUpdate 如果不立即调用，会出现首页放大，8.0以上系统
+ * <p>
+ * 2、Activity onCreate方法中调用，可以在全局注册Activity监听器，去调用
+ * adaptUpdate
+ * <p>
+ * 3、Dialog、PopupWindow中需要调用
+ *
+ * <p>
  * Created by yinxuming on 2018/7/31.
  */
 public class ScreenAdapter {
