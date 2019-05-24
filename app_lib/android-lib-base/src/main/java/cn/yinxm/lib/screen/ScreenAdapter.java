@@ -14,6 +14,7 @@ import java.lang.reflect.Field;
 
 import cn.yinxm.lib.utils.log.LogUtil;
 
+
 /**
  * 车机UI稿一般会设计成1:1的，在使用UI稿标注的时候rd也一般用的mdpi（uiScale=1），可以使用此工具适配车机、手机
  *  注意ScreenAdapter调用时机
@@ -206,6 +207,18 @@ public class ScreenAdapter {
                 metrics.updateDensity();
             }
             LogUtil.d(TAG, "updateApplicationDensity=" + mApplication.getResources().getDisplayMetrics());
+        } catch (Exception e) {
+            updateApplicationDensityLowerVersion(application, targetDensity, targetScaledDensity);
+        }
+    }
+
+    private void updateApplicationDensityLowerVersion(Application application, float targetDensity, float targetScaledDensity) {
+        try {
+            DisplayMetrics contextDisplayMetrics = application.getResources().getDisplayMetrics();
+            contextDisplayMetrics.density = targetDensity;
+            contextDisplayMetrics.densityDpi = (int) (160 * targetDensity);
+            contextDisplayMetrics.scaledDensity = targetScaledDensity;
+            LogUtil.d(TAG, "updateApplicationDensityLowerVersion=" + mApplication.getResources().getDisplayMetrics());
         } catch (Exception e) {
             LogUtil.e(TAG, e);
         }
