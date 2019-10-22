@@ -6,6 +6,7 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.RequiresPermission;
+import android.text.TextUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.Iterator;
@@ -246,6 +247,36 @@ public class AppActivityManager {
             info.topActivityName = localRunningTaskInfo.topActivity.getClassName();
         }
         return info;
+    }
+
+    /**
+     * 判断应用是否是在后台
+     */
+    public static boolean isBackground(Context context) {
+        if (context == null) {
+            return true;
+        }
+
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+
+        if (activityManager == null) {
+            return true;
+        }
+
+        List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager.getRunningAppProcesses();
+
+        if (null == appProcesses || appProcesses.size() <= 0) {
+            return true;
+        }
+
+        for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
+            if (TextUtils.equals(appProcess.processName, context.getPackageName())) {
+                boolean isBackground = (appProcess.importance != ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND && appProcess.importance != ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIBLE);
+//                boolean isLockedState = keyguardManager.inKeyguardRestrictedInputMode();
+                return isBackground;
+            }
+        }
+        return false;
     }
 
     public static class TopActivityInfo {
