@@ -190,4 +190,10 @@ public class LogUtil {
         }
 
     }
+
+    public static void debugStack(String tag) {
+        RuntimeException runtimeException = new RuntimeException("here:");
+        runtimeException.fillInStackTrace();
+        Log.w(tag, "Called: ", runtimeException);
+    }
 }

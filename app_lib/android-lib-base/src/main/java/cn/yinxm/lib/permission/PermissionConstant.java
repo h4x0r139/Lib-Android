@@ -17,7 +17,7 @@ public class PermissionConstant {
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.CAMERA,
             Manifest.permission.RECORD_AUDIO,
-            Manifest.permission.SEND_SMS,   //m800读取短信
+            Manifest.permission.SEND_SMS,   //m800读取短信e4dc
             Manifest.permission.READ_EXTERNAL_STORAGE
     };
     public static final String[] APP_DANGEROUS_PERMISSIONS_NAME = {

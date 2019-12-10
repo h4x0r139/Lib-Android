@@ -4,6 +4,7 @@ package cn.yinxm.lib.utils.event;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.os.SystemClock;
 
 import cn.yinxm.lib.utils.log.LogUtil;
 
@@ -100,7 +101,8 @@ public class FrequentEventQueue<T> {
                     switch (msg.what) {
                         case EVENT_LAST:
                         case EVENT_COME:
-                            long currentTime = System.currentTimeMillis();
+                            long currentTime = SystemClock.uptimeMillis();  //
+                            // 不用currentTimeMillis，防止系统时间调整影响队列运行
                             if ((currentTime - mLastProcessedTime) < mMinInterval) {
 //                                LogUtil.e(TAG,"Ignore calls that are too frequent ... ");
                                 Message newMsg = obtainMessage(EVENT_LAST, msg.obj);
